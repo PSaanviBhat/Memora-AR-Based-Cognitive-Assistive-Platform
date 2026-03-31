@@ -1,0 +1,5 @@
+pretrained_models/
+venv/
+__pycache__/
+.DS_Store
+*.db
