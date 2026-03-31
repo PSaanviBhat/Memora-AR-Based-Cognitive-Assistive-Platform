@@ -38,6 +38,7 @@ class WhisperSTTHandler:
             device: Device for computation ("cpu" or "cuda")
             language: Language code (e.g., "en" for English)
         """
+        global WHISPER_AVAILABLE
         self.model_name = model
         self.device = device
         self.language = language
