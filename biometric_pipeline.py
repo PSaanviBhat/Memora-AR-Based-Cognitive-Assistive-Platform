@@ -108,7 +108,7 @@ class BiometricPipeline:
         Validate embedding shapes, NaN/Inf values, and normalization
 
         Args:
-            face_emb: Face embedding (should be 128-d)
+            face_emb: Face embedding (should be 512-d from InsightFace buffalo_s)
             voice_emb: Voice embedding (should be 192-d)
             log: Print validation errors
 
@@ -120,8 +120,8 @@ class BiometricPipeline:
         # Face validation
         if face_emb is None:
             issues.append("face_emb is None")
-        elif face_emb.shape != (128,):
-            issues.append(f"face_emb shape {face_emb.shape} != (128,)")
+        elif face_emb.shape != (512,):
+            issues.append(f"face_emb shape {face_emb.shape} != (512,)")
         elif np.any(np.isnan(face_emb)) or np.any(np.isinf(face_emb)):
             issues.append(f"face_emb contains NaN/Inf")
         elif not (0.99 <= np.linalg.norm(face_emb) <= 1.01):
@@ -227,7 +227,7 @@ class BiometricPipeline:
             'confidence_level': ic.confidence_level,
             'registered_at': time.strftime('%Y-%m-%d %H:%M:%S'),
             'transcript': stt_result.get('text', '') if stt_result else '',
-            'face_quality_scores': self.face_quality_scores.tolist() if self.face_quality_scores else [],
+            'face_quality_scores': self.face_quality_scores if self.face_quality_scores else [],
             'audio_quality': self.audio_processor.get_audio_quality_score(audio_data) if audio_data is not None else {}
         }
 
